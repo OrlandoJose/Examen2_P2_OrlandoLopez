@@ -12,10 +12,10 @@ public class Producto {
    String Codigo;
     String Nombre;
          String Categoria;
-String Precio;
+int Precio;
 int Cantidad;
 
-    public Producto(String Codigo, String Nombre, String Categoria, String Precio, int Cantidad) {
+    public Producto(String Codigo, String Nombre, String Categoria, int Precio, int Cantidad) {
         this.Codigo = Codigo;
         this.Nombre = Nombre;
         this.Categoria = Categoria;
@@ -47,11 +47,11 @@ int Cantidad;
         this.Categoria = Categoria;
     }
 
-    public String getPrecio() {
+    public int getPrecio() {
         return Precio;
     }
 
-    public void setPrecio(String Precio) {
+    public void setPrecio(int Precio) {
         this.Precio = Precio;
     }
 
