@@ -273,7 +273,7 @@ modeloTabla.addColumn("cantidad");
             
         }
                 
-        String n=jTextArea1.getText();
+        String n=jTextArea2.getText();
         String []arreglo=n.split(",");      
         String Codigo=arreglo[0]; 
         String Nombre=arreglo[1];
@@ -282,11 +282,12 @@ modeloTabla.addColumn("cantidad");
         String Cantidad=arreglo[4];
         int precio=Integer.parseInt(Precio);
         int cantidad=Integer.parseInt(Cantidad);
+
         Producto temp=new Producto(Codigo,Nombre,Categoria,precio,cantidad);
         producto.add(temp);
         DefaultComboBoxModel modelo=(DefaultComboBoxModel) jComboBox1.getModel();
         modelo.addElement(temp);
-        
+        Inventario temp1=new Inventario(n);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
