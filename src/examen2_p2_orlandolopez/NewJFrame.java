@@ -67,6 +67,9 @@ modeloTabla.addColumn("cantidad");
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,32 +148,50 @@ modeloTabla.addColumn("cantidad");
                 .addGap(65, 65, 65)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Buscar", jPanel2);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Abrir");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane3.setViewportView(jTextArea2);
+
+        jButton3.setText("Guardar");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(248, 248, 248)
-                .addComponent(jButton1)
-                .addContainerGap(570, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(118, 118, 118)
                 .addComponent(jButton1)
-                .addGap(166, 166, 166))
+                .addGap(38, 38, 38)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(56, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel3);
+        jTabbedPane1.addTab("Mostrar", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,17 +214,7 @@ modeloTabla.addColumn("cantidad");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String n=jTextArea1.getText();
-        String []arreglo=n.split(",");      
-        String Codigo=arreglo[0]; 
-        String Nombre=arreglo[1];
-        String Categoria=arreglo[2]; 
-        String Precio=arreglo[3];
-        String Cantidad=arreglo[4];
-        int precio=Integer.parseInt(Precio);
-        int cantidad=Integer.parseInt(Cantidad);
-        Producto temp=new Producto(Codigo,Nombre,Categoria,precio,cantidad);
-        producto.add(temp);
+
         JFileChooser fileChooser=new JFileChooser();
         int op = fileChooser.showSaveDialog(this);
         if(op==JFileChooser.APPROVE_OPTION){
@@ -218,8 +229,6 @@ modeloTabla.addColumn("cantidad");
               }catch(IOException e){
                   System.out.println("error");
               }
-    DefaultComboBoxModel modelo=(DefaultComboBoxModel) jComboBox1.getModel();
-    modelo.addElement(temp);
     
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -237,6 +246,67 @@ modeloTabla.addColumn("cantidad");
          datos[4]=p.getCantidad();
         modeloTabla.addRow(datos);
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            JFileChooser fileChooser=new JFileChooser();
+        int op=fileChooser.showOpenDialog(this);
+        if(op==JFileChooser.APPROVE_OPTION){ 
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+            System.out.println(archivoSeleccionado.getName());
+            System.out.println(archivoSeleccionado.getPath());
+            try{
+                FileReader fr = new FileReader(archivoSeleccionado);
+                BufferedReader br = new BufferedReader(fr);              
+                String lineaActual = br.readLine();
+                
+                do {
+                    System.out.println(lineaActual);
+                    jTextArea2.append(lineaActual+"\n");
+                    lineaActual = br.readLine();
+                } while (lineaActual!=null);
+                br.close();
+            }catch(IOException e){
+                System.out.println("Ocurrio un error");
+            }
+            
+        }else{
+            
+        }
+                
+        String n=jTextArea1.getText();
+        String []arreglo=n.split(",");      
+        String Codigo=arreglo[0]; 
+        String Nombre=arreglo[1];
+        String Categoria=arreglo[2]; 
+        String Precio=arreglo[3];
+        String Cantidad=arreglo[4];
+        int precio=Integer.parseInt(Precio);
+        int cantidad=Integer.parseInt(Cantidad);
+        Producto temp=new Producto(Codigo,Nombre,Categoria,precio,cantidad);
+        producto.add(temp);
+        DefaultComboBoxModel modelo=(DefaultComboBoxModel) jComboBox1.getModel();
+        modelo.addElement(temp);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+                JFileChooser fileChooser=new JFileChooser();
+        int op = fileChooser.showSaveDialog(this);
+        if(op==JFileChooser.APPROVE_OPTION){
+              File archivoSeleccionado = fileChooser.getSelectedFile();
+              try{
+                 FileWriter fw=new FileWriter(archivoSeleccionado, false );
+                 BufferedWriter bw=new BufferedWriter(fw);
+                 String nuevoTexto=jTextArea1.getText();
+                 bw.write(nuevoTexto);
+                 bw.close();
+                 JOptionPane.showMessageDialog(this,"Archivo guardado");                 
+              }catch(IOException e){
+                  System.out.println("error");
+              }
+    
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,9 +333,11 @@ modeloTabla.addColumn("cantidad");
         java.awt.EventQueue.invokeLater(() -> new NewJFrame().setVisible(true));
     }
 ArrayList<Producto>producto=new ArrayList<>();
+ArrayList<Inventario>inv=new ArrayList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -273,8 +345,10 @@ ArrayList<Producto>producto=new ArrayList<>();
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
